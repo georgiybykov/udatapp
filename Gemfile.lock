@@ -80,6 +80,9 @@ GEM
       dry-configurable (~> 0.13, >= 0.13.0)
     dry-core (0.7.1)
       concurrent-ruby (~> 1.0)
+    dry-monads (1.4.0)
+      concurrent-ruby (~> 1.0)
+      dry-core (~> 0.7)
     erubi (1.10.0)
     ffi (1.15.5)
     ffi (1.15.5-java)
@@ -232,6 +235,7 @@ DEPENDENCIES
   byebug
   dry-auto_inject (~> 0.9)
   dry-container (~> 0.9)
+  dry-monads (~> 1.4)
   jwt (~> 2.3)
   listen (~> 3.3)
   pg (~> 1.1)
