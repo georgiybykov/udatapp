@@ -26,14 +26,13 @@ module Udatapp
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.1
 
-    # Configuration for the application, engines, and railties goes here.
-    #
-    # These settings can be overridden in specific environments using the files
-    # in config/environments, which are processed later.
-
     config.time_zone = 'Moscow'
 
-    # config.eager_load_paths << Rails.root.join("extras")
+    config.eager_load_paths += [
+      root / 'lib'
+    ]
+
+    # config.autoload_paths << Rails.root.join('lib')
 
     # Only loads a smaller set of middleware suitable for API only apps.
     # Middleware like session, flash, cookies can be added back manually.

@@ -14,6 +14,9 @@ gem 'jwt', '~> 2.3'
 
 gem 'bootsnap', '>= 1.4.4', require: false
 
+gem 'dry-auto_inject', '~> 0.9'
+gem 'dry-container', '~> 0.9'
+
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'pry-byebug'
