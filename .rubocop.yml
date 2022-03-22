@@ -42,10 +42,6 @@ AllCops:
 Layout/LineLength:
   Max: 120
 
-Layout/LeadingCommentSpace:
-  Exclude:
-    - Gemfile
-
 Layout/MultilineMethodCallIndentation:
   EnforcedStyle: indented_relative_to_receiver
 
@@ -88,13 +84,6 @@ Metrics/ParameterLists:
 Metrics/PerceivedComplexity:
   Exclude:
     - db/seeds.rb
-
-Metrics/BlockLength:
-  Exclude:
-    - config/environments/**/*
-    - config/routes.rb
-    - db/**/*
-#    - spec/**/*
 
 Metrics/CyclomaticComplexity:
   Exclude:
