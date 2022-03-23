@@ -1,10 +1,12 @@
 # frozen_string_literal: true
 
 class SessionsController < ApplicationController
+  include Udatapp::Import['services.sessions.authenticate_user']
+
   skip_before_action :authenticate_request!
 
   def create
-    result = Sessions::AuthenticateUser.new.call(email: params[:email], password: params[:password])
+    result = authenticate_user.call(email: params[:email], password: params[:password])
 
     # TODO: temporary with hashes - refactor further
     if result.include?(:auth_token)

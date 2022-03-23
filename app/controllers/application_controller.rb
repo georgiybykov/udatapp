@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::API
+  include Dry::Monads[:result]
+
+  include Udatapp::Import['services.sessions.authorize_api_request']
+
   before_action :authenticate_request!
 
   rescue_from ActiveRecord::RecordNotFound do
@@ -20,6 +24,8 @@ class ApplicationController < ActionController::API
   end
 
   def current_user
-    @current_user ||= Sessions::AuthorizeApiRequest.new.call(auth_header: request.headers['Authorization'])
+    @current_user ||= authorize_api_request
+                        .call(auth_header: request.headers['Authorization'])
+                        .value_or(nil)
   end
 end

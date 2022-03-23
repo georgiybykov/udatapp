@@ -16,7 +16,7 @@ module Udatapp
 
     config.registry = MemoizingRegistry.new
 
-    register('services.current.sessions.authorize_api_request') { Current::Sessions::AuthorizeApiRequest.new }
-    register('services.current.sessions.authenticate_user') { Current::Sessions::AuthenticateUser.new }
+    register('services.sessions.authorize_api_request') { Sessions::AuthorizeApiRequest.new }
+    register('services.sessions.authenticate_user') { Sessions::AuthenticateUser.new }
   end
 end
