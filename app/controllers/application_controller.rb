@@ -15,6 +15,12 @@ class ApplicationController < ActionController::API
     render json: { code: :invalid_record }, status: :bad_request
   end
 
+  rescue_from NoMatchingPatternError do |exception|
+    Rails.logger.error { "Exception details: #{exception}" }
+
+    render json: {}, status: :internal_server_error
+  end
+
   private
 
   def authenticate_request!

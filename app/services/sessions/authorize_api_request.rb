@@ -30,7 +30,7 @@ module Sessions
 
       return Failure(:user_not_found) unless user
 
-      Success()
+      Success(user)
     end
   end
 end
