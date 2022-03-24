@@ -18,5 +18,7 @@ module Udatapp
 
     register('services.sessions.authorize_api_request') { Sessions::AuthorizeApiRequest.new }
     register('services.sessions.authenticate_user') { Sessions::AuthenticateUser.new }
+
+    register('contracts.sessions.authenticate_user_contract') { Sessions::AuthenticateUserContract.new }
   end
 end

@@ -2,31 +2,58 @@
 
 module Sessions
   class AuthenticateUser
-    def call(email:, password:)
-      user = find_user(email, password)
+    include Dry::Monads[:result, :do]
 
-      return { user_authentication: ['invalid credentials'] } unless user
+    include Udatapp::Import[contract: 'contracts.sessions.authenticate_user_contract']
 
-      encode(payload: { user_id: user.id }) if user.is_a?(User)
+    # @param params [Hash]
+    #
+    # @return [Dry::Monads::Result<Hash, Symbol>]
+    def call(params:)
+      form = yield validate!(params)
+
+      user = yield find_user(form[:email], form[:password])
+
+      access_token, expiration_time = encode_credentials_for(user)
+
+      serialize_result(access_token, expiration_time)
     end
 
     private
 
+    def validate!(params)
+      result = contract.call(params)
+
+      return Failure(result.errors.to_h) if result.failure?
+
+      Success(result.to_h)
+    end
+
     def find_user(email, password)
       user = User.find_by(email: email)
 
-      return user if user.present? && user.authenticate(password)
+      return Failure(:invalid_email) unless user
+      return Failure(:invalid_password) unless user.authenticate(password)
 
-      false
+      Success(user)
     end
 
-    def encode(payload:, expires_at: 24.hours.from_now)
-      payload[:exp] = expires_at.to_i
+    def encode_credentials_for(user, expires_at: 24.hours.from_now)
+      [
+        JWT.encode(
+          { exp: expires_at.to_i, user_id: user.id },
+          Rails.application.secrets.secret_key_base
+        ),
+        expires_at
+      ]
+    end
 
-      {
-        auth_token: JWT.encode(payload, Rails.application.secrets.secret_key_base),
-        expires_at: expires_at
-      }
+    def serialize_result(access_token, expiration_time)
+      Success(
+        Sessions::AuthenticationInfoFacade
+          .new(access_token: access_token, expiration_time: expiration_time)
+          .then { Sessions::AuthenticationInfoSerializer.new(_1).build_schema }
+      )
     end
   end
 end

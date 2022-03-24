@@ -26,7 +26,7 @@ module Sessions
     end
 
     def find_user(user_id)
-      user = User.find(user_id)
+      user = User.find_by(id: user_id)
 
       return Failure(:user_not_found) unless user
 
