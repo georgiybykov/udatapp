@@ -3,6 +3,7 @@
 module Notes
   class Create
     include Dry::Monads[:result, :do]
+    include Dry::Monads::Do.for(:call)
 
     include Udatapp::Import[contract: 'contracts.notes.create_note_contract']
 
@@ -11,22 +12,14 @@ module Notes
     #
     # @return [Dry::Monads::Result<Hash, Symbol>]
     def call(params:, current_user:)
-      form = yield validate!(params)
+      form = yield contract.call(params)
 
-      note = yield create_note!(form, current_user)
+      note = yield create_note!(form.to_h, current_user)
 
       serialize_result(note)
     end
 
     private
-
-    def validate!(params)
-      result = contract.call(params)
-
-      return Failure(result.errors.to_h) if result.failure?
-
-      Success(result.to_h)
-    end
 
     def create_note!(attributes, user)
       note = Note.new(attributes.merge(user: user))
@@ -36,8 +29,9 @@ module Notes
 
     def serialize_result(note)
       Success(
-        Notes::NoteFacade.new(note: note)
-                         .then { Notes::NoteSerializer.new(_1).build_schema }
+        Notes::NoteFacade
+          .new(note: note)
+          .then { Notes::NoteSerializer.new(_1).build_schema }
       )
     end
   end

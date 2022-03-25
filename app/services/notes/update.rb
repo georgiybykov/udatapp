@@ -12,26 +12,18 @@ module Notes
     #
     # @return [Dry::Monads::Result<Hash, Symbol>]
     def call(note_id:, params:, current_user:)
-      form = yield validate!(params)
+      form = yield contract.call(params)
 
       note = yield find_note(note_id)
 
       yield check_policy!(note, current_user)
 
-      note = yield update_note!(note, form)
+      note = yield update_note!(note, form.to_h)
 
       serialize_result(note)
     end
 
     private
-
-    def validate!(params)
-      result = contract.call(params)
-
-      return Failure(result.errors.to_h) if result.failure?
-
-      Success(result.to_h)
-    end
 
     def find_note(note_id)
       note = Note.find_by(id: note_id)

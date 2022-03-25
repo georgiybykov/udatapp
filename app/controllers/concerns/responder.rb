@@ -11,6 +11,9 @@ module Responder
     case yield
     in Success(result)
       render json: result, status: status
+    in Failure(Dry::Validation::Result => errors)
+      # error = Errors.from_result(errors)
+      render json: errors.to_h, status: :unprocessable_entity
     in Failure(:access_denied)
       render json: { error: :access_denied }, status: :forbidden
     in Failure(:not_found)

@@ -5,3 +5,5 @@ require 'dry/monads/maybe'
 require 'dry/monads/result'
 require 'dry/schema'
 require 'dry/validation'
+
+Dry::Validation.load_extensions(:monads)
