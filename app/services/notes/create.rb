@@ -3,7 +3,6 @@
 module Notes
   class Create
     include Dry::Monads[:result, :do]
-    include Dry::Monads::Do.for(:call)
 
     include Udatapp::Import[contract: 'contracts.notes.create_note_contract']
 
