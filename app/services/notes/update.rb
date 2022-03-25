@@ -47,8 +47,9 @@ module Notes
 
     def serialize_result(note)
       Success(
-        Notes::NoteFacade.new(note: note)
-                         .then { Notes::NoteSerializer.new(_1).build_schema }
+        Notes::NoteFacade
+          .new(note: note)
+          .then { Notes::NoteSerializer.new(_1).build_schema }
       )
     end
   end
