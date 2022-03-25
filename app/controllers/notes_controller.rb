@@ -1,17 +1,14 @@
 # frozen_string_literal: true
 
 class NotesController < ApplicationController
-  include Udatapp::Import[show_note: 'services.notes.show',
+  include Udatapp::Import[fetch_notes_list: 'services.notes.index',
+                          show_note: 'services.notes.show',
                           create_note: 'services.notes.create',
                           update_note: 'services.notes.update',
                           destroy_note: 'services.notes.destroy']
 
   def index
-    notes = Note.not_private.to_a
-
-    facades = notes.map! { Notes::NoteFacade.new(note: _1) }
-
-    render json: Notes::NotesListSerializer.new({ list: facades }).build_schema, status: :ok
+    render json: fetch_notes_list.call.value!, status: :ok
   end
 
   def show
