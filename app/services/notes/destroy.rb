@@ -15,7 +15,7 @@ module Notes
 
       note.destroy!
 
-      Success()
+      Success({})
     end
 
     private
@@ -23,7 +23,7 @@ module Notes
     def find_note(note_id)
       note = Note.find_by(id: note_id)
 
-      return Failure(:note_not_found) unless note
+      return Failure(:not_found) unless note
 
       Success(note)
     end

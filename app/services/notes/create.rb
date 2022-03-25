@@ -13,7 +13,9 @@ module Notes
     def call(params:, current_user:)
       form = yield validate!(params)
 
-      create_note!(form, current_user)
+      note = yield create_note!(form, current_user)
+
+      serialize_result(note)
     end
 
     private
@@ -29,7 +31,14 @@ module Notes
     def create_note!(attributes, user)
       note = Note.new(attributes.merge(user: user))
 
-      note.save ? Success() : Failure(note.errors.to_h)
+      note.save ? Success(note) : Failure(note.errors.to_h)
+    end
+
+    def serialize_result(note)
+      Success(
+        Notes::NoteFacade.new(note: note)
+                         .then { Notes::NoteSerializer.new(_1).build_schema }
+      )
     end
   end
 end

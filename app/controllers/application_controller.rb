@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::API
-  include Dry::Monads[:result]
+  include Responder
 
   include Udatapp::Import['services.sessions.authorize_api_request']
 

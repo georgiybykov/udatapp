@@ -18,7 +18,9 @@ module Notes
 
       yield check_policy!(note, current_user)
 
-      update_note!(note, form)
+      note = yield update_note!(note, form)
+
+      serialize_result(note)
     end
 
     private
@@ -34,7 +36,7 @@ module Notes
     def find_note(note_id)
       note = Note.find_by(id: note_id)
 
-      return Failure(:note_not_found) unless note
+      return Failure(:not_found) unless note
 
       Success(note)
     end
@@ -50,7 +52,14 @@ module Notes
     end
 
     def update_note!(note, attributes)
-      note.update(attributes) ? Success() : Failure(note.errors.to_h)
+      note.update(attributes) ? Success(note) : Failure(note.errors.to_h)
+    end
+
+    def serialize_result(note)
+      Success(
+        Notes::NoteFacade.new(note: note)
+                         .then { Notes::NoteSerializer.new(_1).build_schema }
+      )
     end
   end
 end
