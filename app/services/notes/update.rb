@@ -2,7 +2,7 @@
 
 module Notes
   class Update
-    include Dry::Monads[:result, :do]
+    include Dry::Monads[:result, :maybe, :do]
 
     include Udatapp::Import[contract: 'contracts.notes.update_note_contract']
 
@@ -14,7 +14,7 @@ module Notes
     def call(note_id:, params:, current_user:)
       form = yield contract.call(params)
 
-      note = yield find_note(note_id)
+      note = yield find_note(note_id).to_result(:not_found)
 
       yield check_policy!(note, current_user)
 
@@ -26,11 +26,9 @@ module Notes
     private
 
     def find_note(note_id)
-      note = Note.find_by(id: note_id)
+      note = Note.find_by(id: note_id) or return None()
 
-      return Failure(:not_found) unless note
-
-      Success(note)
+      Some(note)
     end
 
     def check_policy!(note, current_user)

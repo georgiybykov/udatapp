@@ -2,7 +2,7 @@
 
 module Sessions
   class AuthorizeApiRequest
-    include Dry::Monads[:result, :do]
+    include Dry::Monads[:result, :maybe, :do]
 
     # @param auth_header [String]
     #
@@ -10,7 +10,7 @@ module Sessions
     def call(auth_header:)
       decoded_auth_token = yield decode(auth_header)
 
-      find_user(decoded_auth_token[:user_id])
+      find_user(decoded_auth_token[:user_id]).to_result(:user_not_found)
     end
 
     private
@@ -26,11 +26,9 @@ module Sessions
     end
 
     def find_user(user_id)
-      user = User.find_by(id: user_id)
+      user = User.find_by(id: user_id) or return None()
 
-      return Failure(:user_not_found) unless user
-
-      Success(user)
+      Some(user)
     end
   end
 end

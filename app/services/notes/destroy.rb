@@ -2,7 +2,7 @@
 
 module Notes
   class Destroy
-    include Dry::Monads[:result, :do]
+    include Dry::Monads[:result, :maybe, :do]
 
     # @param note_id [Integer]
     # @param current_user [User]
@@ -21,11 +21,9 @@ module Notes
     private
 
     def find_note(note_id)
-      note = Note.find_by(id: note_id)
+      note = Note.find_by(id: note_id) or return None()
 
-      return Failure(:not_found) unless note
-
-      Success(note)
+      Some(note)
     end
 
     def check_policy!(note, current_user)
