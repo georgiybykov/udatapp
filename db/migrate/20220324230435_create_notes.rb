@@ -6,9 +6,12 @@ class CreateNotes < ActiveRecord::Migration[6.1]
       t.string :title, null: false
       t.string :body, null: false
       t.boolean :private, default: false
+
       t.references :user, null: false, foreign_key: true
 
       t.timestamps
+
+      t.index :title, unique: true
     end
   end
 end

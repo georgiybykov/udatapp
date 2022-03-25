@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 20_220_324_230_435) do
     t.bigint 'user_id', null: false
     t.datetime 'created_at', precision: 6, null: false
     t.datetime 'updated_at', precision: 6, null: false
+    t.index ['title'], name: 'index_notes_on_title', unique: true
     t.index ['user_id'], name: 'index_notes_on_user_id'
   end
 
