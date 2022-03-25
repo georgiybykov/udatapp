@@ -4,6 +4,7 @@ module Notes
   class NoteSerializer < BaseSerializer
     json_schema do
       {
+        id: Types::Strict::Integer,
         title: Types::Strict::String,
         body: Types::Strict::String,
         public: Types::Strict::Bool,

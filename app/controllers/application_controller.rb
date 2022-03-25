@@ -8,11 +8,11 @@ class ApplicationController < ActionController::API
   before_action :authenticate_request!
 
   rescue_from ActiveRecord::RecordNotFound do
-    render json: { code: :user_not_found }, status: :not_found
+    render json: { error: :user_not_found }, status: :not_found
   end
 
   rescue_from ActiveRecord::RecordInvalid do
-    render json: { code: :invalid_record }, status: :bad_request
+    render json: { error: :invalid_record }, status: :bad_request
   end
 
   rescue_from NoMatchingPatternError do |exception|
@@ -26,7 +26,7 @@ class ApplicationController < ActionController::API
   def authenticate_request!
     return if current_user
 
-    render json: { code: :invalid_access_token }, status: :unauthorized
+    render json: { error: :invalid_access_token }, status: :unauthorized
   end
 
   def current_user

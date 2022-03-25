@@ -1,14 +1,12 @@
 # frozen_string_literal: true
 
 module Notes
-  class AuthenticationInfoFacade
+  class NoteFacade
     def initialize(note:)
       @note = note
     end
 
-    delegate :title, to: :note
-
-    delegate :body, to: :note
+    delegate :id, :title, :body, to: :note
 
     def public
       !note.private?

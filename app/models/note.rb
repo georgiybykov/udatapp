@@ -5,5 +5,5 @@ class Note < ApplicationRecord
 
   validates :title, :body, presence: true
 
-  scope :not_private, -> { where.not(private: true) }
+  scope :not_private, -> { where(private: false) }
 end

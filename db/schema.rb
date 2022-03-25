@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 20_220_324_230_435) do
   create_table 'notes', force: :cascade do |t|
     t.string 'title', null: false
     t.string 'body', null: false
-    t.boolean 'private'
+    t.boolean 'private', default: false
     t.bigint 'user_id', null: false
     t.datetime 'created_at', precision: 6, null: false
     t.datetime 'updated_at', precision: 6, null: false

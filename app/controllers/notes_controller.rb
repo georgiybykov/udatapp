@@ -1,22 +1,25 @@
 # frozen_string_literal: true
 
 class NotesController < ApplicationController
+  include Udatapp::Import[show_note: 'services.notes.show']
+
   def index
     notes = Note.not_private.to_a
 
-    facades = notes.map! { Notes::AuthenticationInfoFacade.new(note: _1) }
+    facades = notes.map! { Notes::NoteFacade.new(note: _1) }
 
-    render json: { list: Notes::NotesListSerializer.new(facades).build_schema }, status: :ok
+    render json: Notes::NotesListSerializer.new({ list: facades }).build_schema, status: :ok
   end
 
   def show
-    # validate params
-    # find note
-    # serialize result
-
-    note = find_by(id: params[:id])
-
-    render json: note, status: :ok
+    case show_note.call(note_id: params[:id], current_user: current_user)
+    in Success(result)
+      render json: result, status: :ok
+    in Failure(:access_denied)
+      render json: { error: :access_denied }, status: :forbidden
+    in Failure(:note_not_found)
+      render json: { error: :note_not_found }, status: :unprocessable_entity
+    end
   end
 
   def create

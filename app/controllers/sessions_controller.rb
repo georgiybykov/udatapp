@@ -10,7 +10,7 @@ class SessionsController < ApplicationController
     in Success(result)
       render json: result, status: :created
     in Failure(error)
-      render json: { code: error }, status: :unauthorized
+      render json: { error: error }, status: :unauthorized
     end
   end
 end

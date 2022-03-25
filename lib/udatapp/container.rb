@@ -20,5 +20,7 @@ module Udatapp
     register('services.sessions.authenticate_user') { Sessions::AuthenticateUser.new }
 
     register('contracts.sessions.authenticate_user_contract') { Sessions::AuthenticateUserContract.new }
+
+    register('services.notes.show') { Notes::Show.new }
   end
 end
