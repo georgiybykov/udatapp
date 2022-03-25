@@ -16,7 +16,7 @@ class NotesController < ApplicationController
   end
 
   def create
-    perform { create_note.call(params: params.to_unsafe_hash, current_user: current_user) }
+    perform(status: :created) { create_note.call(params: params.to_unsafe_hash, current_user: current_user) }
   end
 
   def update

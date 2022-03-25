@@ -10,7 +10,7 @@ module Sessions
     #
     # @return [Dry::Monads::Result<Hash, Symbol>]
     def call(params:)
-      form = yield validate!(params)
+      form = yield contract.call(params)
 
       user = yield find_user(form[:email], form[:password])
 
@@ -20,14 +20,6 @@ module Sessions
     end
 
     private
-
-    def validate!(params)
-      result = contract.call(params)
-
-      return Failure(result.errors.to_h) if result.failure?
-
-      Success(result.to_h)
-    end
 
     def find_user(email, password)
       user = User.find_by(email: email)

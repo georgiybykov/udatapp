@@ -6,11 +6,6 @@ class SessionsController < ApplicationController
   skip_before_action :authenticate_request!
 
   def create
-    case authenticate_user.call(params: params.to_unsafe_hash)
-    in Success(result)
-      render json: result, status: :created
-    in Failure(error)
-      render json: { error: error }, status: :unauthorized
-    end
+    perform(status: :created) { authenticate_user.call(params: params.to_unsafe_hash) }
   end
 end
