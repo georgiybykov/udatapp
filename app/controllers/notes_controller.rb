@@ -3,7 +3,8 @@
 class NotesController < ApplicationController
   include Udatapp::Import[show_note: 'services.notes.show',
                           create_note: 'services.notes.create',
-                          update_note: 'services.notes.update']
+                          update_note: 'services.notes.update',
+                          destroy_note: 'services.notes.destroy']
 
   def index
     notes = Note.not_private.to_a
@@ -47,9 +48,13 @@ class NotesController < ApplicationController
   end
 
   def destroy
-    # validate params
-    # check policy
-    # destroy note
-    # return response 200
+    case destroy_note.call(note_id: params[:id], current_user: current_user)
+    in Success()
+      render json: {}, status: :ok
+    in Failure(:access_denied)
+      render json: { error: :access_denied }, status: :forbidden
+    in Failure(:note_not_found)
+      render json: { error: :note_not_found }, status: :unprocessable_entity
+    end
   end
 end

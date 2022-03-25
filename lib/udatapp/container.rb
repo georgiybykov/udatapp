@@ -24,6 +24,7 @@ module Udatapp
     register('services.notes.show') { Notes::Show.new }
     register('services.notes.create') { Notes::Create.new }
     register('services.notes.update') { Notes::Update.new }
+    register('services.notes.destroy') { Notes::Destroy.new }
 
     register('contracts.notes.create_note_contract') { Notes::CreateNoteContract.new }
     register('contracts.notes.update_note_contract') { Notes::UpdateNoteContract.new }
