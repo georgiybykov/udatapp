@@ -15,19 +15,5 @@ module Udatapp
     end
 
     config.registry = MemoizingRegistry.new
-
-    register('services.sessions.authorize_api_request') { Sessions::AuthorizeApiRequest.new }
-    register('services.sessions.authenticate_user') { Sessions::AuthenticateUser.new }
-
-    register('contracts.sessions.authenticate_user_contract') { Sessions::AuthenticateUserContract.new }
-
-    register('services.notes.index') { Notes::Index.new }
-    register('services.notes.show') { Notes::Show.new }
-    register('services.notes.create') { Notes::Create.new }
-    register('services.notes.update') { Notes::Update.new }
-    register('services.notes.destroy') { Notes::Destroy.new }
-
-    register('contracts.notes.create_note_contract') { Notes::CreateNoteContract.new }
-    register('contracts.notes.update_note_contract') { Notes::UpdateNoteContract.new }
   end
 end
