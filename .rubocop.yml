@@ -105,3 +105,5 @@ Naming/VariableNumber:
   EnforcedStyle: non_integer
   Exclude:
     - db/seeds.rb
+    - config/routes.rb
+    - config/routes/*
