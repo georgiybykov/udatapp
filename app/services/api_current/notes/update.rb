@@ -19,9 +19,9 @@ module ApiCurrent
 
         yield check_policy!(note, current_user)
 
-        note = yield update_note!(note, form.to_h)
+        yield update_note!(note, form.to_h)
 
-        serialize_result(note)
+        Success({})
       end
 
       private
@@ -44,14 +44,6 @@ module ApiCurrent
 
       def update_note!(note, attributes)
         note.update(attributes) ? Success(note) : Failure(note.errors.to_h)
-      end
-
-      def serialize_result(note)
-        Success(
-          ApiCurrent::Notes::NoteFacade
-            .new(note: note)
-            .then { ApiCurrent::Notes::NoteSerializer.new(_1).build_schema }
-        )
       end
     end
   end
