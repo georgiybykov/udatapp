@@ -36,7 +36,7 @@ group :development, :test do
 end
 
 group :test do
-  # gem 'factory_bot_rails'
+  gem 'factory_bot_rails'
   # gem 'shoulda-matchers', '~> 5.1'
 end
 
