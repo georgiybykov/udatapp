@@ -12,14 +12,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_220_324_230_435) do
+ActiveRecord::Schema.define(version: 20_220_327_173_957) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
   create_table 'notes', force: :cascade do |t|
     t.string 'title', null: false
-    t.string 'body', null: false
-    t.boolean 'private', default: false
+    t.text 'body', null: false
+    t.boolean 'private', default: false, null: false
     t.bigint 'user_id', null: false
     t.datetime 'created_at', precision: 6, null: false
     t.datetime 'updated_at', precision: 6, null: false
