@@ -94,6 +94,13 @@ Metrics/CyclomaticComplexity:
 Metrics/AbcSize:
   Max: 40
 
+Metrics/BlockLength:
+  Exclude:
+    - config/environments/**/*
+    - config/routes.rb
+    - db/**/*
+    - spec/**/*
+
 Lint/RaiseException:
   Enabled: true
 
