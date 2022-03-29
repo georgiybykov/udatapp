@@ -2,22 +2,12 @@
 
 module ApiCurrent
   class UsersController < ApplicationController
+    include Udatapp::Import[create_user: 'services.api_current.users.create']
+
     skip_before_action :authenticate_request!
 
     def create
-      user = User.new(user_params)
-
-      if user.save
-        render json: {}, status: :created
-      else
-        render json: { error: :not_created, errors: user.errors }, status: :unprocessable_entity
-      end
-    end
-
-    private
-
-    def user_params
-      params.permit(:email, :password)
+      perform(status: :created) { create_user.call(params: params.to_unsafe_hash) }
     end
   end
 end

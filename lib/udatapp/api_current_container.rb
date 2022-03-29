@@ -7,6 +7,8 @@ container.register('services.api_current.sessions.authenticate_user') { ApiCurre
 
 container.register('contracts.api_current.sessions.authenticate_user_contract') { ApiCurrent::Sessions::AuthenticateUserContract.new }
 
+container.register('services.api_current.users.create') { ApiCurrent::Users::Create.new }
+
 container.register('services.api_current.notes.index') { ApiCurrent::Notes::Index.new }
 container.register('services.api_current.notes.show') { ApiCurrent::Notes::Show.new }
 container.register('services.api_current.notes.create') { ApiCurrent::Notes::Create.new }
