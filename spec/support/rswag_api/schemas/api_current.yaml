@@ -1,0 +1,69 @@
+---
+:openapi: '3.0.3'
+:info:
+  title: API current version - v2
+  version: api_current
+:basePath: '/api/v2'
+:servers:
+  - url: 'http://localhost:3000/api/v2'
+    description: 'Local'
+:components:
+  :schemas:
+
+    notes_list:
+      type: object
+      additionalProperties: false
+      required:
+        - list
+      properties:
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/note'
+
+    note:
+      type: object
+      additionalProperties: false
+      required:
+        - id
+        - title
+        - body
+        - public
+        - published_at
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        body:
+          type: string
+        public:
+          type: boolean
+        published_at:
+          type: string
+
+    note_contract_error:
+      type: object
+      additionalProperties: false
+      properties:
+        title:
+          type: array
+          items:
+            type: string
+        body:
+          type: array
+          items:
+            type: string
+        private:
+          type: array
+          items:
+            type: string
+
+    error:
+      type: object
+      additionalProperties: false
+      required:
+        - error
+      properties:
+        error:
+          type: string

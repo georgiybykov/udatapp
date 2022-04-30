@@ -1,7 +1,7 @@
 require:
   - rubocop-performance
   - rubocop-rails
-#  - rubocop-rspec
+  - rubocop-rspec
 
 AllCops:
   TargetRubyVersion: 2.7
@@ -10,41 +10,12 @@ AllCops:
     - bin/**/*
     - db/seeds.rb
     - vendor/**/*
-#    - spec/features/**/*
-
-#RSpec/MultipleExpectations:
-#  Enabled: false
-#
-#RSpec/MultipleMemoizedHelpers:
-#  Max: 10
-#  Exclude:
-#    - spec/api/**/*
-#
-#RSpec/ExampleLength:
-#  Max: 10
-#  Exclude:
-#    - spec/api/**/*
-#
-#RSpec/ContextWording:
-#  Prefixes:
-#    - when
-#    - with
-#    - without
-#    - if
-#    - and
-#
-#RSpec/NestedGroups:
-#  Max: 6
-#
-#RSpec/MessageSpies:
-#  Enabled: false
+    - spec/features/**/*
 
 Layout/LineLength:
   Max: 120
-
-Layout/LeadingCommentSpace:
   Exclude:
-    - Gemfile
+    - lib/udatapp/api_current_container.rb
 
 Layout/MultilineMethodCallIndentation:
   EnforcedStyle: indented_relative_to_receiver
@@ -89,13 +60,6 @@ Metrics/PerceivedComplexity:
   Exclude:
     - db/seeds.rb
 
-Metrics/BlockLength:
-  Exclude:
-    - config/environments/**/*
-    - config/routes.rb
-    - db/**/*
-#    - spec/**/*
-
 Metrics/CyclomaticComplexity:
   Exclude:
     - db/seeds.rb
@@ -103,14 +67,46 @@ Metrics/CyclomaticComplexity:
 Metrics/AbcSize:
   Max: 40
 
+Metrics/BlockLength:
+  Exclude:
+    - config/environments/**/*
+    - config/routes.rb
+    - db/**/*
+    - spec/**/*
+
 Lint/RaiseException:
   Enabled: true
 
 Lint/StructNewOverride:
   Enabled: true
 
-Naming/VariableNumber:
-  Enabled: true
-  EnforcedStyle: non_integer
+RSpec/ScatteredSetup:
   Exclude:
-    - db/seeds.rb
+    - spec/requests/**/*_spec.rb
+
+RSpec/MultipleExpectations:
+  Enabled: false
+
+RSpec/MultipleMemoizedHelpers:
+  Max: 10
+  Exclude:
+    - spec/api/**/*
+
+RSpec/ExampleLength:
+  Max: 10
+  Exclude:
+    - spec/api/**/*
+
+RSpec/ContextWording:
+  Prefixes:
+    - when
+    - with
+    - without
+    - if
+    - and
+
+RSpec/NestedGroups:
+  Max: 6
+
+RSpec/MessageSpies:
+  Enabled: false

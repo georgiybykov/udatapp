@@ -23,5 +23,8 @@
 # Ignore master key for decrypting credentials and more.
 /config/master.key
 
-# Igore the local database configuration
+# Igore the local database configuration.
 config/database.yml
+
+# Rswag API schemas.
+/swagger/*
