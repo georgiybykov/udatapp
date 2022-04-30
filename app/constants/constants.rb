@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Common
+module Constants
   API_CURRENT_VERSION = 'api/v2'
   API_V1_VERSION = 'api/v1'
 

@@ -15,7 +15,7 @@ module ApiCurrent
       private
 
       def invalid_email?(email)
-        !Common::SIMPLE_EMAIL_REGEXP.match?(email)
+        !Constants::SIMPLE_EMAIL_REGEXP.match?(email)
       end
     end
   end

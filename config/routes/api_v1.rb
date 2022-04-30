@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  scope Common::API_V1_VERSION, module: :api_v1 do
-    resources :notes, only: :update
+  scope Constants::API_V1_VERSION, module: :api_v1 do
+    patch 'notes/:id', to: 'notes#update', constraints: { id: /\d+/ }
   end
 
-  scope Common::API_V1_VERSION, module: :api_current do
+  scope Constants::API_V1_VERSION, module: :api_current do
     post 'registration',        to: 'users#create'
     post 'login',               to: 'sessions#create'
 

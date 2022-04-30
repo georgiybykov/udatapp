@@ -21,12 +21,16 @@ gem 'dry-validation', '~> 1.8'
 
 gem 'surrealist', '~> 2.0'
 
+gem 'rswag-api'
+gem 'rswag-ui'
+
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'pry-byebug'
 
   gem 'rails-controller-testing'
   gem 'rspec-rails'
+  gem 'rswag-specs'
 
   gem 'rubocop-performance', require: false
   gem 'rubocop-rails', require: false

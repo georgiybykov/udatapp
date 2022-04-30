@@ -59,7 +59,7 @@ describe ApiCurrent::Notes::Update, type: :service, aggregate_failures: true do
     before { create(:note, title: 'New note title') }
 
     it 'does not update the note and returns Failure monad with errors' do
-      expect(result).to eq(Failure({ title: 'has already been taken' }))
+      expect(result).to eq(Failure({ title: ['Title has already been taken'] }))
     end
   end
 

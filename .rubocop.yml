@@ -12,33 +12,6 @@ AllCops:
     - vendor/**/*
     - spec/features/**/*
 
-RSpec/MultipleExpectations:
-  Enabled: false
-
-RSpec/MultipleMemoizedHelpers:
-  Max: 10
-  Exclude:
-    - spec/api/**/*
-
-RSpec/ExampleLength:
-  Max: 10
-  Exclude:
-    - spec/api/**/*
-
-RSpec/ContextWording:
-  Prefixes:
-    - when
-    - with
-    - without
-    - if
-    - and
-
-RSpec/NestedGroups:
-  Max: 6
-
-RSpec/MessageSpies:
-  Enabled: false
-
 Layout/LineLength:
   Max: 120
   Exclude:
@@ -107,10 +80,33 @@ Lint/RaiseException:
 Lint/StructNewOverride:
   Enabled: true
 
-Naming/VariableNumber:
-  Enabled: true
-  EnforcedStyle: non_integer
+RSpec/ScatteredSetup:
   Exclude:
-    - db/seeds.rb
-    - config/routes.rb
-    - config/routes/*
+    - spec/requests/**/*_spec.rb
+
+RSpec/MultipleExpectations:
+  Enabled: false
+
+RSpec/MultipleMemoizedHelpers:
+  Max: 10
+  Exclude:
+    - spec/api/**/*
+
+RSpec/ExampleLength:
+  Max: 10
+  Exclude:
+    - spec/api/**/*
+
+RSpec/ContextWording:
+  Prefixes:
+    - when
+    - with
+    - without
+    - if
+    - and
+
+RSpec/NestedGroups:
+  Max: 6
+
+RSpec/MessageSpies:
+  Enabled: false

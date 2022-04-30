@@ -43,7 +43,7 @@ module ApiCurrent
       end
 
       def update_note!(note, attributes)
-        note.update(attributes) ? Success() : Failure(note.errors.to_h)
+        note.update(attributes) ? Success() : Failure(note.errors.to_hash(true))
       end
     end
   end

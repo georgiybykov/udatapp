@@ -9,6 +9,14 @@ FactoryBot.define do
 
     association :user
 
+    trait :public do
+      private { false }
+    end
+
+    trait :private do
+      private { true }
+    end
+
     trait :invalid do
       title { nil }
     end

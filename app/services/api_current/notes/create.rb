@@ -24,7 +24,7 @@ module ApiCurrent
       def create_note!(attributes, user)
         note = Note.new(attributes.merge(user: user))
 
-        note.save ? Success(note) : Failure(note.errors.to_h)
+        note.save ? Success(note) : Failure(note.errors.to_hash(true))
       end
 
       def serialize_result(note)
